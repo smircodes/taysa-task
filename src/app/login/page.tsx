@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import Cookies from "js-cookie";
 
 type LoginFormData = {
   email: string;
@@ -18,17 +19,13 @@ export default function LoginPage() {
   } = useForm<LoginFormData>();
 
   const router = useRouter();
+
   const onSubmit = async (data: LoginFormData) => {
     // console.log(data);
     try {
       const response = await axios.post(
         "https://taysatest.pythonanywhere.com/api/auth/login/",
-        data,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
+        data
       );
 
       if (response.data?.result) {
@@ -38,6 +35,8 @@ export default function LoginPage() {
         toast.success(response.data.message || "Login Successful!");
         console.log("User:", user);
         console.log("Token:", token);
+
+        Cookies.set("auth_token", token, { expires: 7 });
 
         router.push("/dashboard");
       } else {
@@ -50,7 +49,6 @@ export default function LoginPage() {
       // console.log("Error during login:", error);
     }
   };
-
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <input
@@ -66,6 +64,7 @@ export default function LoginPage() {
       {errors.email && <p>{errors.email.message}</p>}
 
       <input
+        type="password"
         {...register("password", {
           required: "Password is required",
           minLength: {

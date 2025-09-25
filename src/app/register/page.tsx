@@ -24,12 +24,7 @@ export default function RegisterPage() {
     try {
       const response = await axios.post(
         "https://taysatest.pythonanywhere.com/api/auth/register/",
-        data,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
+        data
       );
       // console.log("Register successful:", response.data);
       if (response.data?.result) {
