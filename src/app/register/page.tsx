@@ -5,6 +5,7 @@ import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import { useRouter } from "next/navigation"; // App Router
 import styles from "./register.module.scss";
+import Cookies from "js-cookie";
 
 type RegisterFormData = {
   nickname: string;
@@ -29,6 +30,10 @@ export default function RegisterPage() {
       );
       // console.log("Register successful:", response.data);
       if (response.data?.result) {
+        Cookies.set("user_info", JSON.stringify(response.data.data[0]), {
+          expires: 7,
+        });
+
         toast.success(response.data.message || "Register successful!");
         router.push("/login");
       } else {
