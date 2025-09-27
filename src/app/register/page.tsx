@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import { useRouter } from "next/navigation"; // App Router
+import styles from "./register.module.scss";
 
 type RegisterFormData = {
   nickname: string;
@@ -41,48 +42,66 @@ export default function RegisterPage() {
   };
 
   return (
-    <>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <input
-          {...register("nickname", { required: "Nickname is required" })}
-          placeholder="Nickname"
-        />
-        {errors.nickname && <p>{errors.nickname.message}</p>}
+    <div className={styles.container}>
+      <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+        <div className={styles.formGroup}>
+          <label>Nick name</label>
+          <input
+            className={errors.nickname ? styles.inputError : ""}
+            {...register("nickname", { required: "Nickname is required" })}
+            placeholder="Enter username"
+          />
+          {errors.nickname && (
+            <p className={styles.error}>{errors.nickname.message}</p>
+          )}
+        </div>
 
-        <input
-          {...register("email", {
-            required: "Email is required",
-            pattern: {
-              value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-              message: "Invalid email format",
-            },
-          })}
-          placeholder="Email"
-        />
-        {errors.email && <p>{errors.email.message}</p>}
+        <div className={styles.formGroup}>
+          <label>Email</label>
+          <input
+            className={errors.email ? styles.inputError : ""}
+            {...register("email", {
+              required: "Email is required",
+              pattern: {
+                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                message: "Invalid email format",
+              },
+            })}
+            placeholder="Enter email"
+          />
+          {errors.email && (
+            <p className={styles.error}>{errors.email.message}</p>
+          )}
+        </div>
 
-        <input
-          type="password"
-          {...register("password", {
-            required: "Password is required",
-            minLength: {
-              value: 8,
-              message: "Password must be at least 8 characters",
-            },
-            pattern: {
-              value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
-              message: "Password must contain letters and numbers",
-            },
-          })}
-          placeholder="Password"
-        />
-        {errors.password && <p>{errors.password.message}</p>}
+        <div className={styles.formGroup}>
+          <label>Password</label>
+          <input
+            className={errors.password ? styles.inputError : ""}
+            type="password"
+            {...register("password", {
+              required: "Password is required",
+              minLength: {
+                value: 8,
+                message: "Password must be at least 8 characters",
+              },
+              pattern: {
+                value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+                message: "Password must contain letters and numbers",
+              },
+            })}
+            placeholder="Enter password"
+          />
+          {errors.password && (
+            <p className={styles.error}>{errors.password.message}</p>
+          )}
+        </div>
 
         <button type="submit" disabled={isSubmitting}>
           {isSubmitting ? "Loading..." : "Register"}
         </button>
       </form>
       <Toaster />
-    </>
+    </div>
   );
 }
