@@ -61,3 +61,27 @@
     cursor: pointer;
   }
 }
+// Show password with eye
+.passwordWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  input {
+    width: 100%;
+    padding-right: 40px;
+  }
+}
+
+.toggleIcon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #888;
+
+  &:hover {
+    color: #333;
+  }
+}

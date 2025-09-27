@@ -7,6 +7,9 @@ import { useRouter } from "next/navigation"; // App Router
 import styles from "./register.module.scss";
 import Cookies from "js-cookie";
 
+import { useState } from "react";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+
 type RegisterFormData = {
   nickname: string;
   email: string;
@@ -14,6 +17,7 @@ type RegisterFormData = {
 };
 
 export default function RegisterPage() {
+  const [showPassword, setShowPassword] = useState(false);
   const {
     register,
     handleSubmit,
@@ -81,22 +85,30 @@ export default function RegisterPage() {
 
         <div className={styles.formGroup}>
           <label>Password</label>
-          <input
-            className={errors.password ? styles.inputError : ""}
-            type="password"
-            {...register("password", {
-              required: "Password is required",
-              minLength: {
-                value: 8,
-                message: "Password must be at least 8 characters",
-              },
-              pattern: {
-                value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
-                message: "Password must contain letters and numbers",
-              },
-            })}
-            placeholder="Enter password"
-          />
+          <div className={styles.passwordWrapper}>
+            <input
+              className={errors.password ? styles.inputError : ""}
+              type={showPassword ? "text" : "password"}
+              {...register("password", {
+                required: "Password is required",
+                minLength: {
+                  value: 8,
+                  message: "Password must be at least 8 characters",
+                },
+                pattern: {
+                  value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+                  message: "Password must contain letters and numbers",
+                },
+              })}
+              placeholder="Password"
+            />
+            <span
+              className={styles.toggleIcon}
+              onClick={() => setShowPassword((prev) => !prev)}
+            >
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
+            </span>
+          </div>
           {errors.password && (
             <p className={styles.error}>{errors.password.message}</p>
           )}
