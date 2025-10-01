@@ -52,7 +52,11 @@ export default function RegisterPage() {
 
   return (
     <div className={styles.container}>
-      <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+      <form
+        className={styles.form}
+        onSubmit={handleSubmit(onSubmit)}
+        autoComplete="off"
+      >
         <div className={styles.formGroup}>
           <label>Nick name</label>
           <input

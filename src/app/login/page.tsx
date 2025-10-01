@@ -57,7 +57,11 @@ export default function LoginPage() {
   };
   return (
     <div className={styles.container}>
-      <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+      <form
+        className={styles.form}
+        onSubmit={handleSubmit(onSubmit)}
+        autoComplete="off"
+      >
         <div className={styles.formGroup}>
           <label>Email</label>
           <input
