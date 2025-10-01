@@ -18,7 +18,14 @@ export default function Dashboard() {
   }, []);
 
   return (
-    <div>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100vh",
+      }}
+    >
       <h1>Welcome to Dashboard 🎉</h1>
       {!user ? (
         <p>user data is loading...</p>
