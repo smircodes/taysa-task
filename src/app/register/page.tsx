@@ -122,7 +122,11 @@ export default function RegisterPage() {
           {isSubmitting ? "Loading..." : "Register"}
         </button>
       </form>
-      <Toaster />
+      <Toaster
+        toastOptions={{
+          duration: 6000,
+        }}
+      />
     </div>
   );
 }

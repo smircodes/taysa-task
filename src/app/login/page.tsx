@@ -2,7 +2,7 @@
 
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import toast from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 
@@ -114,6 +114,11 @@ export default function LoginPage() {
           {isSubmitting ? "Logging in..." : "Login"}
         </button>
       </form>
+      <Toaster
+        toastOptions={{
+          duration: 6000,
+        }}
+      />
     </div>
   );
 }
